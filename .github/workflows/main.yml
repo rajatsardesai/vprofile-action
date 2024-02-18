@@ -1,6 +1,7 @@
 name: vprofile actions
 on: workflow_dispatch
 env:
+  PROJECT_ID: gitops-414615
   GCP_REGION: us-central1
   ARTIFACT_REGISTRY: vprofileapp
   GKE_CLUSTER: vprofile-gke
@@ -58,3 +59,11 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
+
+      - name: Build and publish image to GCR
+        uses: carbonchain/action-container-registry@v1.1
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          dockerfile: ./Dockerfile
+          image: gcr.io/${{ env.ARTIFACT_REGISTRY }}/latest-${{ github.run_number }}
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
