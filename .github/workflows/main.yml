@@ -66,7 +66,6 @@ jobs:
     needs: Testing
     runs-on:  ubuntu-latest
     steps:
-
       - name: Build and publish image to GCR
         uses: RafikFarhad/push-to-gcr-github-action@v5-rc1
         with:
