@@ -79,11 +79,13 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Authenticate with GCP
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
+
       - name: Get Kube config file
         run: gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GCP_REGION }}
-
-      - name: Authenticate with GCP
-        run: gcloud auth login
 
       - name: Login to GKE
         run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
