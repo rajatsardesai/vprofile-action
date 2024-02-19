@@ -93,7 +93,7 @@ jobs:
         run: gcloud components install gke-gcloud-auth-plugin
 
       - name: Login to GKE
-        run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
+        run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=${{ env.GOOGLE_APPLICATION_CREDENTIALS }} --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Deploy Helm
         uses: jmagnusson/deploy-helm-gke-action@v1
