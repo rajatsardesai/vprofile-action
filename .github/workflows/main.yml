@@ -66,9 +66,6 @@ jobs:
     needs: Testing
     runs-on:  ubuntu-latest
     steps:
-      - name: Set project id
-        run: gcloud config set project ${{ env.PROJECT_ID }}
-        
       - name: Build and publish image to GCR
         uses: RafikFarhad/push-to-gcr-github-action@v5-rc1
         with:
@@ -77,7 +74,7 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           image_name: latest-${{ github.run_number }}
           image_tag: latest,${{ github.run_number }}
-          gcloud_service_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          gcloud_service_key: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
           dockerfile: ./Dockerfile
           context: ./
 
