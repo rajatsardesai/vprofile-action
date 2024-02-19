@@ -96,6 +96,9 @@ jobs:
       - name: Login to GKE
         run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=$(gcloud auth print-access-token) --dry-run=client -o yaml | kubectl apply -f -
 
+      - name: Print config filr
+        run: cat ~/.kube/config
+
       - name: Checkout source code
         uses: actions/checkout@v2
 
