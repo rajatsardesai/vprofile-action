@@ -102,8 +102,8 @@ jobs:
           docker-image-repo: gcr.io/${{ secrets.GKE_PROJECT }}/${{ env.APP_NAME }}
           docker-image-tag: ${{ github.sha }}
           helm-release-name: ${{ env.APP_NAME }}
-          helm-chart-path: ./helm/${{ env.HELM_CHART_NAME }}
-          helm-vars-folder: ./helm/${{ env.HELM_CHART_NAME }}
+          helm-chart-path: ${GITHUB_WORKSPACE}/helm/${{ env.HELM_CHART_NAME }}
+          helm-vars-folder: ${GITHUB_WORKSPACE}/helm/${{ env.HELM_CHART_NAME }}
           gke-project: ${{ env.PROJECT_ID }}
           gke-cluster: ${{ env.GKE_CLUSTER }}
           gke-zone: ${{ env.GCP_REGION }}
