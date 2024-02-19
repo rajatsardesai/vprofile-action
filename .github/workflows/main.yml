@@ -17,7 +17,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: List dir
-        run: ls -R ${{ env.HELM_CHART_PATH }}
+        run: ls -R ../../
+
+      - name: List dir
+        run: ls -R ../
+
+      - name: List dir
+        run: ls -R ./
 
       - name: Maven test
         run: mvn test
