@@ -1,6 +1,8 @@
 name: vprofile actions
 on: workflow_dispatch
 env:
+  #credentials for deployment to GCP
+  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
   PROJECT_ID: gitops-414615
   GCP_REGION: us-central1
   GKE_CLUSTER: vprofile-gke
