@@ -7,7 +7,7 @@ env:
   GCP_REGION: us-central1
   GKE_CLUSTER: vprofile-gke
   APP_NAME: latest-${{ github.run_number }}
-  HELM_CHART_PATH: ../../helm/vprofilecharts
+  HELM_CHART_PATH: ../helm/vprofilecharts
 
 jobs:
   Testing:
