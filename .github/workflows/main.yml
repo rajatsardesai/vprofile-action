@@ -4,6 +4,7 @@ env:
   PROJECT_ID: gitops-414615
   GCP_REGION: us-central1
   GKE_CLUSTER: vprofile-gke
+  APP_NAME: latest-25
 
 jobs:
   Testing:
@@ -70,3 +71,29 @@ jobs:
           gcloud_service_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           dockerfile: ./Dockerfile
           context: ./
+
+  DeployToGKE:
+    needs: BUILD_AND_PUBLISH
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Get Kube config file
+        run: gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GCP_REGION }}
+
+      - name: Login to GKE
+        run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+      - name: Deploy Helm
+        uses: jmagnusson/deploy-helm-gke-action@v1
+        with:
+          docker-image-repo: gcr.io/${{ secrets.GKE_PROJECT }}/${{ env.APP_NAME }}
+          docker-image-tag: ${{ github.sha }}
+          helm-release-name: ${{ env.APP_NAME }}
+          helm-chart-path: helm/vprofilecharts
+          helm-vars-folder: helm/vprofilecharts
+          gke-project: ${{ env.PROJECT_ID }}
+          gke-cluster: ${{ env.GKE_CLUSTER }}
+          gke-zone: ${{ env.GCP_REGION }}
+          gke-sa-key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
