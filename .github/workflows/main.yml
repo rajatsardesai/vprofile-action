@@ -63,8 +63,6 @@ jobs:
     needs: Testing
     runs-on:  ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
 
       - name: Build and publish image to GCR
         uses: RafikFarhad/push-to-gcr-github-action@v5-rc1
@@ -82,9 +80,6 @@ jobs:
     needs: BUILD_AND_PUBLISH
     runs-on:  ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
@@ -101,6 +96,9 @@ jobs:
 
       - name: Login to GKE
         run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=${{ env.GOOGLE_APPLICATION_CREDENTIALS }} --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
 
       - name: List dir
         run: ls -R ${{ env.HELM_CHART_PATH }}
