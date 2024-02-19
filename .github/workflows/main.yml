@@ -16,6 +16,9 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
+      - name: List dir
+        run: ls -R ${{ env.HELM_CHART_PATH }}
+
       - name: Maven test
         run: mvn test
 
