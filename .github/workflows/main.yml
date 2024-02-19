@@ -3,7 +3,6 @@ on: workflow_dispatch
 env:
   PROJECT_ID: gitops-414615
   GCP_REGION: us-central1
-  ARTIFACT_REGISTRY: vprofileapp
   GKE_CLUSTER: vprofile-gke
 
 jobs:
@@ -64,7 +63,7 @@ jobs:
         uses: RafikFarhad/push-to-gcr-github-action@v5-rc1
         with:
           # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
-          registry: gcr.io
+          registry: ${{ secrets.REGISTRY }}
           project_id: ${{ env.PROJECT_ID }}
           image_name: latest-${{ github.run_number }}
           image_tag: latest,${{ github.run_number }}
