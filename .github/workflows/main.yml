@@ -105,15 +105,5 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Deploy Helm
-        uses: jmagnusson/deploy-helm-gke-action@v1
-        with:
-          docker-image-repo: gcr.io/${{ secrets.GKE_PROJECT }}/${{ env.APP_NAME }}
-          docker-image-tag: ${{ github.sha }}
-          helm-release-name: ${{ env.APP_NAME }}
-          helm-chart-path: ${{ env.HELM_CHART_PATH }} 
-          helm-vars-folder: ${{ env.HELM_CHART_PATH }} 
-          gke-project: ${{ env.PROJECT_ID }}
-          gke-cluster: ${{ env.GKE_CLUSTER }}
-          gke-zone: ${{ env.GCP_REGION }}
-          gke-sa-key: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
+      - name: Deploy Helm Chart
+        run: helm upgrade --install ${{ env.APP_NAME }} ${{ env.HELM_CHART_PATH }} --set image.repository=gcr.io/${{ secrets.GKE_PROJECT }}/${{ env.APP_NAME }},image.tag=$GITHUB_SHA
