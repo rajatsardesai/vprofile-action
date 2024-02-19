@@ -99,6 +99,9 @@ jobs:
       - name: Login to GKE
         run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=${{ env.GOOGLE_APPLICATION_CREDENTIALS }} --dry-run=client -o yaml | kubectl apply -f -
 
+      - name: List dir
+        run: ls -R ${{ env.HELM_CHART_PATH }}
+
       - name: Deploy Helm
         uses: jmagnusson/deploy-helm-gke-action@v1
         with:
