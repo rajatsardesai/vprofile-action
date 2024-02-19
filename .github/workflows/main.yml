@@ -68,5 +68,6 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           image_name: latest-${{ github.run_number }}
           image_tag: latest,${{ github.run_number }}
+          gcloud_service_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           dockerfile: ./docker/Dockerfile.prod
           context: ./docker
