@@ -61,8 +61,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build and publish image to GCR
-        uses: webgtx/gcr-podman-action@v2
+        uses: dacbd/gcr-build-push@main
         with:
-          project_id: ${{ env.PROJECT_ID }}
-          image_id: latest-${{ github.run_number }}:latest
-          access_token: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          tags: latest-${{ github.run_number }}
+          project-id: ${{ env.PROJECT_ID }}
+          GCR-key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
