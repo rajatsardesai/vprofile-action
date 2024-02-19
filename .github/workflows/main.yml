@@ -91,10 +91,7 @@ jobs:
         run: gcloud components install gke-gcloud-auth-plugin
 
       - name: Get Kube config file
-        run: gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GCP_REGION }} 
-            export KUBECONFIG=$HOME/.kube/config
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
+        run: gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GCP_REGION }}
 
       - name: Login to GKE
         run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=$(gcloud auth print-access-token) --dry-run=client -o yaml | kubectl apply -f -
