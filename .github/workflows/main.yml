@@ -86,11 +86,11 @@ jobs:
         with:
           credentials_json: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
-
       - name: Get Kube config file
         run: gcloud container clusters get-credentials ${{ env.GKE_CLUSTER }} --region ${{ env.GCP_REGION }}
+
+      - name: Install gke auth plugin
+        run: gcloud components install gke-gcloud-auth-plugin
 
       - name: Login to GKE
         run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
