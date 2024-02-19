@@ -16,6 +16,9 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
+      - name: List directory contents
+        run: ls -R ${GITHUB_WORKSPACE}
+
       - name: Maven test
         run: mvn test
 
