@@ -63,7 +63,7 @@ jobs:
         uses: RafikFarhad/push-to-gcr-github-action@v5-rc1
         with:
           # gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }} # can be base64 encoded or plain text || not needed if you use google-github-actions/auth
-          registry: vprofileapp
+          registry: gcr.io
           project_id: ${{ env.PROJECT_ID }}
           image_name: latest-${{ github.run_number }}
           image_tag: latest,${{ github.run_number }}
