@@ -60,6 +60,9 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
+      - name: Configure docker
+        run:  gcloud auth configure-docker
+
       - name: Build and publish image to GCR
         uses: carbonchain/action-container-registry@v1.1
         with:
