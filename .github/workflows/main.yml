@@ -97,7 +97,7 @@ jobs:
         run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=GKE  --docker-password=${{ env.GOOGLE_APPLICATION_CREDENTIALS }} --dry-run=client -o yaml | kubectl apply -f -
 
       - name: List directory contents
-        run: ls -R ${{ GITHUB_WORKSPACE }}/helm/vprofilecharts
+        run: ls -R ${GITHUB_WORKSPACE}/helm/vprofilecharts
 
       - name: Deploy Helm
         uses: jmagnusson/deploy-helm-gke-action@v1
@@ -105,8 +105,8 @@ jobs:
           docker-image-repo: gcr.io/${{ secrets.GKE_PROJECT }}/${{ env.APP_NAME }}
           docker-image-tag: ${{ github.sha }}
           helm-release-name: ${{ env.APP_NAME }}
-          helm-chart-path: ${GITHUB_WORKSPACE}/helm/${{ env.HELM_CHART_NAME }}
-          helm-vars-folder: ${GITHUB_WORKSPACE}/helm/${{ env.HELM_CHART_NAME }}
+          helm-chart-path: ${GITHUB_WORKSPACE}/helm/vprofilecharts
+          helm-vars-folder: ${GITHUB_WORKSPACE}/helm/vprofilecharts
           gke-project: ${{ env.PROJECT_ID }}
           gke-cluster: ${{ env.GKE_CLUSTER }}
           gke-zone: ${{ env.GCP_REGION }}
