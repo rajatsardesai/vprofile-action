@@ -60,8 +60,11 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v2
 
-      - name: Configure docker
-        run:  gcloud auth configure-docker
+      - name: Run configure docker
+        run:  gcloud auth login
+
+      - name: Configure project
+        run:  gcloud config set project ${{ env.PROJECT_ID }}
 
       - name: Build and publish image to GCR
         uses: carbonchain/action-container-registry@v1.1
