@@ -7,7 +7,7 @@ env:
   GCP_REGION: us-central1
   GKE_CLUSTER: vprofile-gke
   APP_NAME: latest-${{ github.run_number }}
-  HELM_CHART_NAME: vprofilecharts
+  HELM_CHART_PATH: ../../helm/vprofilecharts
 
 jobs:
   Testing:
@@ -105,8 +105,8 @@ jobs:
           docker-image-repo: gcr.io/${{ secrets.GKE_PROJECT }}/${{ env.APP_NAME }}
           docker-image-tag: ${{ github.sha }}
           helm-release-name: ${{ env.APP_NAME }}
-          helm-chart-path: ${GITHUB_WORKSPACE}/helm/vprofilecharts
-          helm-vars-folder: ${GITHUB_WORKSPACE}/helm/vprofilecharts
+          helm-chart-path: ${{ env.HELM_CHART_PATH }} 
+          helm-vars-folder: ${{ env.HELM_CHART_PATH }} 
           gke-project: ${{ env.PROJECT_ID }}
           gke-cluster: ${{ env.GKE_CLUSTER }}
           gke-zone: ${{ env.GCP_REGION }}
